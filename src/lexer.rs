@@ -12,10 +12,14 @@ pub enum TokenType {
     NOTEQ,
     PLUS,
     MINUS,
+    GT,
+    LT,
 
     // Delimiters
     COMMA,
     SEMICOLON,
+    ASTERISK,
+    SLASH,
 
     // Braces
     LPAREN,
@@ -28,6 +32,9 @@ pub enum TokenType {
     LET,
     IF,
     ELSE,
+    TRUE,
+    FALSE,
+    RETURN,
 }
 
 #[derive(Debug, PartialEq)]
@@ -77,30 +84,30 @@ impl<'a> Lexer<'a> {
         };
 
         match self.ch {
-            ',' => {
-                tok.token_type = TokenType::COMMA;
-            }
-            '+' => {
-                tok.token_type = TokenType::PLUS;
-            }
-            '-' => {
-                tok.token_type = TokenType::MINUS;
-            }
-            ';' => {
-                tok.token_type = TokenType::SEMICOLON;
-            }
-            '(' => {
-                tok.token_type = TokenType::LPAREN;
-            }
-            ')' => {
-                tok.token_type = TokenType::RPAREN;
-            }
-            '{' => {
-                tok.token_type = TokenType::LBRACE;
-            }
-            '}' => {
-                tok.token_type = TokenType::RBRACE;
-            }
+            ',' => tok.token_type = TokenType::COMMA,
+
+            '>' => tok.token_type = TokenType::GT,
+
+            '<' => tok.token_type = TokenType::LT,
+
+            '+' => tok.token_type = TokenType::PLUS,
+
+            '-' => tok.token_type = TokenType::MINUS,
+
+            ';' => tok.token_type = TokenType::SEMICOLON,
+
+            '*' => tok.token_type = TokenType::ASTERISK,
+
+            '(' => tok.token_type = TokenType::LPAREN,
+
+            ')' => tok.token_type = TokenType::RPAREN,
+
+            '{' => tok.token_type = TokenType::LBRACE,
+
+            '}' => tok.token_type = TokenType::RBRACE,
+
+            '/' => tok.token_type = TokenType::SLASH,
+
             '=' => {
                 if let Some(next_char) = self.input.chars().nth(self.read_position) {
                     if next_char == '=' {
@@ -155,6 +162,9 @@ impl<'a> Lexer<'a> {
             "let" => TokenType::LET,
             "if" => TokenType::IF,
             "else" => TokenType::ELSE,
+            "return" => TokenType::RETURN,
+            "true" => TokenType::TRUE,
+            "false" => TokenType::FALSE,
             _ => TokenType::IDENT,
         }
     }

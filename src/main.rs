@@ -6,7 +6,6 @@ use crate::lexer::TokenType;
 
 fn main() {
     println!("Monkey Lang");
-    print!(">>> ");
     if let Err(e) = io::stdout().flush() {
         panic!("Unable to flush stdout, {}", e);
     }
@@ -25,7 +24,5 @@ fn main() {
                 println!("{:?}", tok);
             }
         }
-
-        print!(">>> ");
     }
 }
